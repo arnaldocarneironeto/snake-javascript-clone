@@ -48,6 +48,11 @@ function iniciarJogo() {
 		}
 	}
 
+	if(snek.length == 128) {
+		clearInterval(jogo);
+		alert("Parabens! Você venceu o jogo!");
+	}
+
 	criarBG();
 	desenharComida();
 	criarSnek();
