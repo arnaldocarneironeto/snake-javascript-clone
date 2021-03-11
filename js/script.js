@@ -34,12 +34,13 @@ function iniciarJogo() {
 
 	snek.pop();
 
-	let newHead= {
-		x: snekX * box,
-		y: snekY * box
+	let newHead = {
+		x: snekX,
+		y: snekY
 	}
 
 	snek.unshift(newHead);
+	console.log(snek);
 }
 
 jogo = setInterval(iniciarJogo, 100);
