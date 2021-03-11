@@ -1,5 +1,6 @@
 let canvas = document.getElementById("snek");
 let context = canvas.getContext("2d");
+let coordsBox = document.getElementById("coords");
 let box = 32;
 let snek = [];
 snek[0] = {
@@ -7,6 +8,10 @@ snek[0] = {
 	y: 8 * box
 }
 let direction = "right";
+let food = {
+	x: Math.floor(Math.random() * 15 + 1) * box,
+	y: Math.floor(Math.random() * 15 + 1) * box
+}
 
 function criarBG() {
 	context.fillStyle = "lightgreen";
@@ -20,6 +25,11 @@ function criarSnek() {
 	}
 }
 
+function desenharComida() {
+	context.fillStyle = "red";
+	context.fillRect(food.x, food.y, box, box);
+}
+
 document.addEventListener('keydown', update);
 
 function update(event) {
@@ -31,12 +41,8 @@ function update(event) {
 }
 
 function iniciarJogo() {
-	if(snek[0].x > 15 * box && direction == "right") snek[0].x = 0;
-	if(snek[0].x < 0 * box && direction == "left") snek[0].x = 15 * box;
-	if(snek[0].y > 15 * box && direction == "down") snek[0].y = 0;
-	if(snek[0].y < 0 * box && direction == "up") snek[0].y = 15 * box;
-
 	criarBG();
+	desenharComida();
 	criarSnek();
 
 	let snekX = snek[0].x;
@@ -47,7 +53,19 @@ function iniciarJogo() {
 	if(direction == "up") snekY -= box;
 	if(direction == "down") snekY += box;
 
-	snek.pop();
+	if(snekX > 15 * box && direction == "right") snekX = 0;
+	if(snekX < 0 * box && direction == "left") snekX = 15 * box;
+	if(snekY > 15 * box && direction == "down") snekY = 0;
+	if(snekY < 0 * box && direction == "up") snekY = 15 * box;
+
+	if(snekX != food.x || snekY != food.y) {
+		snek.pop();
+	}
+	else {
+		food.x = Math.floor(Math.random() * 15 + 1) * box;
+		food.y = Math.floor(Math.random() * 15 + 1) * box;
+	}
+
 
 	let newHead = {
 		x: snekX,
@@ -55,6 +73,8 @@ function iniciarJogo() {
 	}
 
 	snek.unshift(newHead);
+
+	coords.innerHTML = snekX + " x " + snekY;
 }
 
 jogo = setInterval(iniciarJogo, 100);
