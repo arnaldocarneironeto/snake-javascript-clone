@@ -41,6 +41,13 @@ function update(event) {
 }
 
 function iniciarJogo() {
+	for(i = 1; i < snek.length; ++i) {
+		if(snek[0].x == snek[i].x && snek[0].y == snek[i].y) {
+			clearInterval(jogo);
+			alert("Game Over :(");
+		}
+	}
+
 	criarBG();
 	desenharComida();
 	criarSnek();
