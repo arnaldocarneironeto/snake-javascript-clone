@@ -20,7 +20,22 @@ function criarSnek() {
 	}
 }
 
+document.addEventListener('keydown', update);
+
+function update(event) {
+	if(event.keyCode == 37 && direction != "right") direction = "left";
+	if(event.keyCode == 38 && direction != "down") direction = "up";
+	if(event.keyCode == 39 && direction != "left") direction = "right";
+	if(event.keyCode == 40 && direction != "up") direction = "down";
+	console.log(event.keyCode);
+}
+
 function iniciarJogo() {
+	if(snek[0].x > 15 * box && direction == "right") snek[0].x = 0;
+	if(snek[0].x < 0 * box && direction == "left") snek[0].x = 15 * box;
+	if(snek[0].y > 15 * box && direction == "down") snek[0].y = 0;
+	if(snek[0].y < 0 * box && direction == "up") snek[0].y = 15 * box;
+
 	criarBG();
 	criarSnek();
 
@@ -40,7 +55,6 @@ function iniciarJogo() {
 	}
 
 	snek.unshift(newHead);
-	console.log(snek);
 }
 
 jogo = setInterval(iniciarJogo, 100);
