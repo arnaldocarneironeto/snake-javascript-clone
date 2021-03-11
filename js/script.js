@@ -6,6 +6,7 @@ snek[0] = {
 	x: 8 * box,
 	y: 8 * box
 }
+let direction = "right";
 
 function criarBG() {
 	context.fillStyle = "lightgreen";
@@ -19,5 +20,26 @@ function criarSnek() {
 	}
 }
 
-criarBG();
-criarSnek();
+function iniciarJogo() {
+	criarBG();
+	criarSnek();
+
+	let snekX = snek[0].x;
+	let snekY = snek[0].y;
+
+	if(direction == "right") snekX += box;
+	if(direction == "left") snekX -= box;
+	if(direction == "up") snekY -= box;
+	if(direction == "down") snekY += box;
+
+	snek.pop();
+
+	let newHead= {
+		x: snekX * box,
+		y: snekY * box
+	}
+
+	snek.unshift(newHead);
+}
+
+jogo = setInterval(iniciarJogo, 100);
